@@ -311,12 +311,16 @@ namespace Formularios
                 }
             }
 
-            dgvProductos.DataSource = (from p in productos
+
+            var productosFiltrados = (from p in productos
                                        select new { TipoProducto = p.TipoProducto.Descripcion, Categoria = p.Categoria.Descripcion, p.Descripcion, Medida = p.Medida.Descripcion, p.Precio, p.Stock })
                                        .ToList();
+            dgvProductos.DataSource = productosFiltrados;
+
+
             //Valoracion
             float total = 0;
-            foreach (var item in ListProductos)
+            foreach (var item in productosFiltrados)
             {
                 total += ((float)item.Precio * item.Stock);
             };
@@ -363,12 +367,14 @@ namespace Formularios
                                 select p;
                 }
 
-                dgvProductos.DataSource = (from p in productos
+                var productosFiltrados = (from p in productos
                                            select new { TipoProducto = p.TipoProducto.Descripcion, Categoria = p.Categoria.Descripcion, p.Descripcion, Medida = p.Medida.Descripcion, p.Precio, p.Stock })
                                            .ToList();
+                dgvProductos.DataSource = productosFiltrados;
+
                 //Valoracion
                 float total = 0;
-                foreach (var item in ListProductos)
+                foreach (var item in productosFiltrados)
                 {
                     total += ((float)item.Precio * item.Stock);
                 };
@@ -376,12 +382,15 @@ namespace Formularios
             }
             else
             {
-                dgvProductos.DataSource = (from p in ListProductos
+
+                var productosFiltrados = (from p in ListProductos
                                            select new { TipoProducto = p.TipoProducto.Descripcion, Categoria = p.Categoria.Descripcion, p.Descripcion, Medida = p.Medida.Descripcion, p.Precio, p.Stock })
-                                           .ToList();
+                                          .ToList();
+                dgvProductos.DataSource = productosFiltrados;
+
                 //Valoracion
                 float total = 0;
-                foreach (var item in ListProductos)
+                foreach (var item in productosFiltrados)
                 {
                     total += ((float)item.Precio * item.Stock);
                 };
