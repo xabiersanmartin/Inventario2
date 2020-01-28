@@ -85,7 +85,7 @@ namespace Formularios
             grbAjustesProductos.Visible = false;
 
             //Valoracion
-            float total=0;
+            float total = 0;
             foreach (var item in ListProductos)
             {
                 total += ((float)item.Precio * item.Stock);
@@ -314,6 +314,13 @@ namespace Formularios
             dgvProductos.DataSource = (from p in productos
                                        select new { TipoProducto = p.TipoProducto.Descripcion, Categoria = p.Categoria.Descripcion, p.Descripcion, Medida = p.Medida.Descripcion, p.Precio, p.Stock })
                                        .ToList();
+            //Valoracion
+            float total = 0;
+            foreach (var item in ListProductos)
+            {
+                total += ((float)item.Precio * item.Stock);
+            };
+            txtValoracion.Text = total.ToString();
         }
 
         /// <summary>
@@ -359,12 +366,26 @@ namespace Formularios
                 dgvProductos.DataSource = (from p in productos
                                            select new { TipoProducto = p.TipoProducto.Descripcion, Categoria = p.Categoria.Descripcion, p.Descripcion, Medida = p.Medida.Descripcion, p.Precio, p.Stock })
                                            .ToList();
+                //Valoracion
+                float total = 0;
+                foreach (var item in ListProductos)
+                {
+                    total += ((float)item.Precio * item.Stock);
+                };
+                txtValoracion.Text = total.ToString();
             }
             else
             {
                 dgvProductos.DataSource = (from p in ListProductos
                                            select new { TipoProducto = p.TipoProducto.Descripcion, Categoria = p.Categoria.Descripcion, p.Descripcion, Medida = p.Medida.Descripcion, p.Precio, p.Stock })
                                            .ToList();
+                //Valoracion
+                float total = 0;
+                foreach (var item in ListProductos)
+                {
+                    total += ((float)item.Precio * item.Stock);
+                };
+                txtValoracion.Text = total.ToString();
             }
         }
 
