@@ -115,6 +115,8 @@
             this.label3 = new System.Windows.Forms.Label();
             this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
             this.txtValoracion = new MetroFramework.Controls.MetroTextBox();
+            this.btnExportarPDF = new MetroFramework.Controls.MetroButton();
+            this.btnVentas = new MetroFramework.Controls.MetroButton();
             ((System.ComponentModel.ISupportInitialize)(this.picLogoEmpresa)).BeginInit();
             this.tabControl.SuspendLayout();
             this.tabProductos.SuspendLayout();
@@ -1254,11 +1256,31 @@
             this.txtValoracion.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
             this.txtValoracion.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
             // 
+            // btnExportarPDF
+            // 
+            this.btnExportarPDF.Location = new System.Drawing.Point(105, 676);
+            this.btnExportarPDF.Name = "btnExportarPDF";
+            this.btnExportarPDF.Size = new System.Drawing.Size(106, 29);
+            this.btnExportarPDF.TabIndex = 40;
+            this.btnExportarPDF.Text = "&Exportar a PDF";
+            this.btnExportarPDF.UseSelectable = true;
+            // 
+            // btnVentas
+            // 
+            this.btnVentas.Location = new System.Drawing.Point(236, 676);
+            this.btnVentas.Name = "btnVentas";
+            this.btnVentas.Size = new System.Drawing.Size(106, 29);
+            this.btnVentas.TabIndex = 41;
+            this.btnVentas.Text = "&Ventas";
+            this.btnVentas.UseSelectable = true;
+            // 
             // FrmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1264, 681);
+            this.ClientSize = new System.Drawing.Size(1279, 711);
+            this.Controls.Add(this.btnVentas);
+            this.Controls.Add(this.btnExportarPDF);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.btnCerrarSesion);
             this.Controls.Add(this.lblCerrarSesion);
@@ -1380,6 +1402,8 @@
         private System.Windows.Forms.Label label3;
         private MetroFramework.Controls.MetroTextBox txtValoracion;
         private MetroFramework.Controls.MetroLabel metroLabel2;
+        private MetroFramework.Controls.MetroButton btnExportarPDF;
+        private MetroFramework.Controls.MetroButton btnVentas;
     }
 }
 

@@ -12,6 +12,10 @@ using MetroFramework.Forms;
 using MetroFramework;
 using Entidades;
 using System.Collections.ObjectModel;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using System.Diagnostics;
+using System.IO;
 
 namespace Formularios
 {
@@ -825,7 +829,81 @@ namespace Formularios
             CR.Select();
             xlWorkSheet.PasteSpecial(CR, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, true);
         }
-
         // Fin exportar a Excel
+
+
+        private void btnExportarPDF_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        //Función que genera el documento Pdf
+        public void GenerarDocumentos(Document document)
+        {
+            //se crea un objeto PdfTable con el numero de columnas del dataGridView 
+            PdfPTable datatable = new PdfPTable(dgvProductos.ColumnCount);
+
+            //asignamos algunas propiedades para el diseño del pdf 
+            datatable.DefaultCell.Padding = 1;
+            float[] headerwidths = GetTamañoColumnas(dgvProductos);
+
+            datatable.SetWidths(headerwidths);
+            datatable.WidthPercentage = 100;
+            datatable.DefaultCell.BorderWidth = 1;
+
+            //DEFINIMOS EL COLOR DE LAS CELDAS EN EL PDF
+            datatable.DefaultCell.BackgroundColor = iTextSharp.text.BaseColor.WHITE;
+
+            //DEFINIMOS EL COLOR DE LOS BORDES
+            datatable.DefaultCell.BorderColor = iTextSharp.text.BaseColor.BLACK;
+
+            //LA FUENTE DE NUESTRO TEXTO
+            iTextSharp.text.Font fuente = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA);
+
+            Phrase objP = new Phrase("A", fuente);
+
+            datatable.DefaultCell.HorizontalAlignment = Element.ALIGN_CENTER;
+
+            //SE GENERA EL ENCABEZADO DE LA TABLA EN EL PDF 
+            for (int i = 0; i < dgvProductos.ColumnCount; i++)
+            {
+
+                objP = new Phrase(dgvProductos.Columns[i].HeaderText, fuente);
+                datatable.HorizontalAlignment = Element.ALIGN_CENTER;
+
+                datatable.AddCell(objP);
+
+            }
+            datatable.HeaderRows = 2;
+
+            datatable.DefaultCell.BorderWidth = 1;
+
+            //SE GENERA EL CUERPO DEL PDF
+            for (int i = 0; i < dgvProductos.RowCount; i++)
+            {
+                for (int j = 0; j < dgvProductos.ColumnCount; j++)
+                {
+                    objP = new Phrase(dgvProductos[j, i].Value.ToString(), fuente);
+                    datatable.AddCell(objP);
+                }
+                datatable.CompleteRow();
+            }
+            document.Add(datatable);
+        }
+
+        //Función que obtiene los tamaños de las columnas del datagridview
+        public float[] GetTamañoColumnas(DataGridView dg)
+        {
+            //Tomamos el numero de columnas
+            float[] values = new float[dg.ColumnCount];
+            for (int i = 0; i < dg.ColumnCount; i++)
+            {
+                //Tomamos el ancho de cada columna
+                values[i] = (float)dg.Columns[i].Width;
+            }
+            return values;
+        }
+
+
     }
 }
