@@ -79,6 +79,14 @@ namespace Formularios
             // Opciones de administrador bloqueadas
             grbAjustesEmpresa.Visible = false;
             grbAjustesProductos.Visible = false;
+
+            //Valoracion
+            float total=0;
+            foreach (var item in ListProductos)
+            {
+                total += ((float)item.Precio * item.Stock);
+            };
+            txtValoracion.Text = total.ToString();
         }
 
 
