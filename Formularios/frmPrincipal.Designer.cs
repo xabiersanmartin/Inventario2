@@ -37,6 +37,8 @@
             this.picLogoEmpresa = new System.Windows.Forms.PictureBox();
             this.tabControl = new MetroFramework.Controls.MetroTabControl();
             this.tabProductos = new MetroFramework.Controls.MetroTabPage();
+            this.txtValoracion = new MetroFramework.Controls.MetroTextBox();
+            this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
             this.lblMsgProductoEliminado = new System.Windows.Forms.Label();
             this.btnBorrarProductos = new MetroFramework.Controls.MetroButton();
@@ -113,8 +115,6 @@
             this.lblCerrarSesion = new MetroFramework.Controls.MetroLabel();
             this.btnCerrarSesion = new MetroFramework.Controls.MetroButton();
             this.label3 = new System.Windows.Forms.Label();
-            this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
-            this.txtValoracion = new MetroFramework.Controls.MetroTextBox();
             this.btnExportarPDF = new MetroFramework.Controls.MetroButton();
             this.btnVentas = new MetroFramework.Controls.MetroButton();
             ((System.ComponentModel.ISupportInitialize)(this.picLogoEmpresa)).BeginInit();
@@ -195,6 +195,46 @@
             this.tabProductos.VerticalScrollbarBarColor = true;
             this.tabProductos.VerticalScrollbarHighlightOnWheel = false;
             this.tabProductos.VerticalScrollbarSize = 10;
+            // 
+            // txtValoracion
+            // 
+            // 
+            // 
+            // 
+            this.txtValoracion.CustomButton.Image = null;
+            this.txtValoracion.CustomButton.Location = new System.Drawing.Point(42, 1);
+            this.txtValoracion.CustomButton.Name = "";
+            this.txtValoracion.CustomButton.Size = new System.Drawing.Size(21, 21);
+            this.txtValoracion.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
+            this.txtValoracion.CustomButton.TabIndex = 1;
+            this.txtValoracion.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
+            this.txtValoracion.CustomButton.UseSelectable = true;
+            this.txtValoracion.CustomButton.Visible = false;
+            this.txtValoracion.Lines = new string[0];
+            this.txtValoracion.Location = new System.Drawing.Point(599, 427);
+            this.txtValoracion.MaxLength = 32767;
+            this.txtValoracion.Name = "txtValoracion";
+            this.txtValoracion.PasswordChar = '\0';
+            this.txtValoracion.ScrollBars = System.Windows.Forms.ScrollBars.None;
+            this.txtValoracion.SelectedText = "";
+            this.txtValoracion.SelectionLength = 0;
+            this.txtValoracion.SelectionStart = 0;
+            this.txtValoracion.ShortcutsEnabled = true;
+            this.txtValoracion.Size = new System.Drawing.Size(64, 23);
+            this.txtValoracion.TabIndex = 39;
+            this.txtValoracion.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txtValoracion.UseSelectable = true;
+            this.txtValoracion.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
+            this.txtValoracion.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
+            // 
+            // metroLabel2
+            // 
+            this.metroLabel2.AutoSize = true;
+            this.metroLabel2.Location = new System.Drawing.Point(532, 429);
+            this.metroLabel2.Name = "metroLabel2";
+            this.metroLabel2.Size = new System.Drawing.Size(69, 19);
+            this.metroLabel2.TabIndex = 38;
+            this.metroLabel2.Text = "Valoración";
             // 
             // metroLabel1
             // 
@@ -1216,46 +1256,6 @@
             this.label3.TabIndex = 23;
             this.label3.Text = "Aplicación realizada por 2ºDam";
             // 
-            // metroLabel2
-            // 
-            this.metroLabel2.AutoSize = true;
-            this.metroLabel2.Location = new System.Drawing.Point(532, 429);
-            this.metroLabel2.Name = "metroLabel2";
-            this.metroLabel2.Size = new System.Drawing.Size(69, 19);
-            this.metroLabel2.TabIndex = 38;
-            this.metroLabel2.Text = "Valoración";
-            // 
-            // txtValoracion
-            // 
-            // 
-            // 
-            // 
-            this.txtValoracion.CustomButton.Image = null;
-            this.txtValoracion.CustomButton.Location = new System.Drawing.Point(42, 1);
-            this.txtValoracion.CustomButton.Name = "";
-            this.txtValoracion.CustomButton.Size = new System.Drawing.Size(21, 21);
-            this.txtValoracion.CustomButton.Style = MetroFramework.MetroColorStyle.Blue;
-            this.txtValoracion.CustomButton.TabIndex = 1;
-            this.txtValoracion.CustomButton.Theme = MetroFramework.MetroThemeStyle.Light;
-            this.txtValoracion.CustomButton.UseSelectable = true;
-            this.txtValoracion.CustomButton.Visible = false;
-            this.txtValoracion.Lines = new string[0];
-            this.txtValoracion.Location = new System.Drawing.Point(599, 427);
-            this.txtValoracion.MaxLength = 32767;
-            this.txtValoracion.Name = "txtValoracion";
-            this.txtValoracion.PasswordChar = '\0';
-            this.txtValoracion.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.txtValoracion.SelectedText = "";
-            this.txtValoracion.SelectionLength = 0;
-            this.txtValoracion.SelectionStart = 0;
-            this.txtValoracion.ShortcutsEnabled = true;
-            this.txtValoracion.Size = new System.Drawing.Size(64, 23);
-            this.txtValoracion.TabIndex = 39;
-            this.txtValoracion.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.txtValoracion.UseSelectable = true;
-            this.txtValoracion.WaterMarkColor = System.Drawing.Color.FromArgb(((int)(((byte)(109)))), ((int)(((byte)(109)))), ((int)(((byte)(109)))));
-            this.txtValoracion.WaterMarkFont = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Pixel);
-            // 
             // btnExportarPDF
             // 
             this.btnExportarPDF.Location = new System.Drawing.Point(105, 676);
@@ -1264,6 +1264,7 @@
             this.btnExportarPDF.TabIndex = 40;
             this.btnExportarPDF.Text = "&Exportar a PDF";
             this.btnExportarPDF.UseSelectable = true;
+            this.btnExportarPDF.Click += new System.EventHandler(this.btnExportarPDF_Click_1);
             // 
             // btnVentas
             // 

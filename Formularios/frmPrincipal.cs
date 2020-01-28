@@ -21,6 +21,7 @@ namespace Formularios
 {
     public partial class FrmPrincipal : MetroForm
     {
+        private Empresa empresaActual; 
         ReadOnlyCollection<Producto> ListProductos { get; set; }
 
         public FrmPrincipal()
@@ -38,7 +39,7 @@ namespace Formularios
             try
             {
                 // Cargar nombre y logo de la empresa
-                Empresa empresa = Program.gestor.LeerEmpresa(out string msg);
+                empresaActual = Program.gestor.LeerEmpresa(out string msg);
 
                 if (msg != "")
                 {
@@ -46,8 +47,8 @@ namespace Formularios
                 }
                 else
                 {
-                    lblEmpresa.Text = empresa.Nombre;
-                    picLogoEmpresa.ImageLocation = empresa.Logo;
+                    lblEmpresa.Text = empresaActual.Nombre;
+                    picLogoEmpresa.ImageLocation = empresaActual.Logo;
                 }
 
 
@@ -855,16 +856,51 @@ namespace Formularios
             xlexcel.Visible = true;
             xlWorkBook = xlexcel.Workbooks.Add(misValue);
             xlWorkSheet = (Microsoft.Office.Interop.Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1);
-            Microsoft.Office.Interop.Excel.Range CR = (Microsoft.Office.Interop.Excel.Range)xlWorkSheet.Cells[1, 1];
+            xlWorkSheet.Shapes.AddPicture(empresaActual.Logo,Microsoft.Office.Core.MsoTriState.msoFalse,Microsoft.Office.Core.MsoTriState.msoCTrue,0,0,60,60);
+            xlWorkSheet.Cells[1, 2] = empresaActual.Nombre;
+            Microsoft.Office.Interop.Excel.Range CR = (Microsoft.Office.Interop.Excel.Range)xlWorkSheet.Cells[2, 1];
             CR.Select();
             xlWorkSheet.PasteSpecial(CR, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing, true);
         }
         // Fin exportar a Excel
 
 
-        private void btnExportarPDF_Click(object sender, EventArgs e)
+        private void btnExportarPDF_Click_1(object sender, EventArgs e)
         {
+            if (dgvProductos.RowCount == 0)
+            {
+                MessageBox.Show("No Hay Datos Para Realizar Un Reporte");
+            }
+            else
+            {    //ESCOJE A RUTA DONDE GUARDAREMOS EL PDF
+                SaveFileDialog save = new SaveFileDialog();
+                save.Filter = "PDF Files (*.pdf)|*.pdf|All Files (*.*)|*.*";
+                if (save.ShowDialog() == DialogResult.OK)
+                {
+                    string filename = save.FileName;
+                    Document doc = new Document(PageSize.A3, 9, 9, 9, 9);
+                    Chunk encab = new Chunk(empresaActual.Nombre, FontFactory.GetFont("COURIER", 18));
+                    try
+                    {
+                        FileStream file = new FileStream(filename, FileMode.OpenOrCreate);
+                        PdfWriter writer = PdfWriter.GetInstance(doc, file);
+                        writer.ViewerPreferences = PdfWriter.PageModeUseThumbs;
+                        writer.ViewerPreferences = PdfWriter.PageLayoutOneColumn;
+                        doc.Open();
 
+                        doc.Add(new Paragraph(encab));
+                        GenerarDocumentos(doc);
+
+                        Process.Start(filename);
+                        doc.Close();
+                    }
+
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                }
+            }
         }
 
         //Función que genera el documento Pdf
@@ -894,6 +930,12 @@ namespace Formularios
 
             datatable.DefaultCell.HorizontalAlignment = Element.ALIGN_CENTER;
 
+            //Nombre de empresa y foto
+            iTextSharp.text.Image image = iTextSharp.text.Image.GetInstance(empresaActual.Logo);
+            image.ScalePercent(25f);
+            document.Add(image);
+
+            datatable.AddCell(objP);
             //SE GENERA EL ENCABEZADO DE LA TABLA EN EL PDF 
             for (int i = 0; i < dgvProductos.ColumnCount; i++)
             {
@@ -933,7 +975,5 @@ namespace Formularios
             }
             return values;
         }
-
-
     }
 }
