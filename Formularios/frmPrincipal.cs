@@ -749,7 +749,6 @@ namespace Formularios
                         t.Start();
 
                         CargarCboCategoria(cboAdministrarCategoria, cboAdministrarTipoProducto);
-                        CargarCboCategoria(cboCategoria, cboTipoProducto);
                     }
                 }
                 catch (Exception ex)
@@ -815,7 +814,6 @@ namespace Formularios
                         t.Start();
 
                         CargarCboMedida(cboAdministrarMedida, cboAdministrarTipoProducto);
-                        CargarCboMedida(cboMedida, cboTipoProducto);
                     }
                 }
                 catch (Exception ex)
