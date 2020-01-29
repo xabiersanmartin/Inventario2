@@ -234,6 +234,7 @@ namespace Formularios
             grbAjustesProductos.Visible = false;
             lblMsgNoLogueadoDatos.Visible = true;
             lblMsgNoLogueadoProductos.Visible = true;
+            esAdmin = false;
         }
 
         private void ChkContrasena_CheckedChanged(object sender, EventArgs e)
