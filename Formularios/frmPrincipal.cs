@@ -21,6 +21,8 @@ namespace Formularios
 {
     public partial class FrmPrincipal : MetroForm
     {
+        bool esAdmin = false;
+
         private Empresa empresaActual; 
         ReadOnlyCollection<Producto> ListProductos { get; set; }
 
@@ -205,6 +207,7 @@ namespace Formularios
                         lblMsgNoLogueadoDatos.Visible = false;
                         lblMsgNoLogueadoProductos.Visible = false;
                         CargarAjustes();
+                        esAdmin = true;
                     }
                     else
                     {
@@ -484,61 +487,69 @@ namespace Formularios
         private void BtnBorrarProductos_Click(object sender, EventArgs e)
         {
             string msg = "";
-
-            DialogResult result = MetroMessageBox.Show(this, "¿Estás seguro de querer borrar estos productos?", "¡Atención!", MessageBoxButtons.YesNo, 250);
-
-            if (result == DialogResult.Yes)
+           
+            if (esAdmin == true)
             {
-                foreach (DataGridViewRow fila in dgvProductos.SelectedRows)
+                DialogResult result = MetroMessageBox.Show(this, "¿Estás seguro de querer borrar estos productos?", "¡Atención!", MessageBoxButtons.YesNo, 250);
+                if (result == DialogResult.Yes)
                 {
-                    foreach (Producto producto in ListProductos)
+                    foreach (DataGridViewRow fila in dgvProductos.SelectedRows)
                     {
-                        if (fila.Cells["TipoProducto"].Value.ToString() == producto.TipoProducto.Descripcion &&
-                            fila.Cells["Categoria"].Value.ToString() == producto.Categoria.Descripcion &&
-                            fila.Cells["Descripcion"].Value.ToString() == producto.Descripcion &&
-                            fila.Cells["Medida"].Value.ToString() == producto.Medida.Descripcion &&
-                            fila.Cells["Precio"].Value.ToString() == producto.Precio.ToString() &&
-                            fila.Cells["Stock"].Value.ToString() == producto.Stock.ToString())
+                        foreach (Producto producto in ListProductos)
                         {
-                            try
+                            if (fila.Cells["TipoProducto"].Value.ToString() == producto.TipoProducto.Descripcion &&
+                                fila.Cells["Categoria"].Value.ToString() == producto.Categoria.Descripcion &&
+                                fila.Cells["Descripcion"].Value.ToString() == producto.Descripcion &&
+                                fila.Cells["Medida"].Value.ToString() == producto.Medida.Descripcion &&
+                                fila.Cells["Precio"].Value.ToString() == producto.Precio.ToString() &&
+                                fila.Cells["Stock"].Value.ToString() == producto.Stock.ToString())
                             {
-                                msg = Program.gestor.BorrarProducto(producto);
-                            }
-                            catch (Exception ex)
-                            {
-                                MetroMessageBox.Show(this, ex.Message, "Error", 250);
+                                try
+                                {
+                                    msg = Program.gestor.BorrarProducto(producto);
+                                }
+                                catch (Exception ex)
+                                {
+                                    MetroMessageBox.Show(this, ex.Message, "Error", 250);
+                                }
                             }
                         }
                     }
-                }
 
-                if (msg != "")
-                {
-                    MetroMessageBox.Show(this, msg, "Error", 250);
-                }
-                else
-                {
-                    lblMsgProductoEliminado.Visible = true;
-                    Timer t = new Timer();
-                    t.Interval = 6000;
-                    t.Tick += (s, ev) =>
+                    if (msg != "")
                     {
-                        lblMsgProductoEliminado.Hide();
-                        t.Stop();
-                    };
-                    t.Start();
-                }
+                        MetroMessageBox.Show(this, msg, "Error", 250);
+                    }
+                    else
+                    {
+                        lblMsgProductoEliminado.Visible = true;
+                        Timer t = new Timer();
+                        t.Interval = 6000;
+                        t.Tick += (s, ev) =>
+                        {
+                            lblMsgProductoEliminado.Hide();
+                            t.Stop();
+                        };
+                        t.Start();
+                    }
 
-                try
-                {
-                    // Actualizamos la lista de productos.
-                    ListProductos = Program.gestor.MostrarProductos(out msg);
-                }
-                catch (Exception ex)
-                {
-                    MetroMessageBox.Show(this, ex.Message + "\nNo se ha podido actualizar la lista de productos.", "Error", 250);
+                    try
+                    {
+                        // Actualizamos la lista de productos.
+                        ListProductos = Program.gestor.MostrarProductos(out msg);
+                    }
+                    catch (Exception ex)
+                    {
+                        MetroMessageBox.Show(this, ex.Message + "\nNo se ha podido actualizar la lista de productos.", "Error", 250);
+                    }
                 }
             }
+            else
+            {
+                MetroMessageBox.Show(this,"Debes iniciar sesion primero","Error",250);
+                return;
+            }
+            
         }
 
         /// <summary>
