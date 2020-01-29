@@ -235,6 +235,7 @@ namespace Formularios
             grbAjustesProductos.Visible = false;
             lblMsgNoLogueadoDatos.Visible = true;
             lblMsgNoLogueadoProductos.Visible = true;
+            esAdmin = false;
         }
 
         private void ChkContrasena_CheckedChanged(object sender, EventArgs e)
@@ -286,6 +287,9 @@ namespace Formularios
             if (textoBuscado == "")
             {
                 productos = ListProductos;
+                dgvProductos.DataSource = (from p in ListProductos
+                                           select new { TipoProducto = p.TipoProducto.Descripcion, Categoria = p.Categoria.Descripcion, p.Descripcion, Medida = p.Medida.Descripcion, p.Precio, p.Stock })
+                                          .ToList();
             }
             else
             {
@@ -353,25 +357,25 @@ namespace Formularios
                 if (cboCategoria.SelectedIndex == -1 && cboMedida.SelectedIndex == -1)
                 {
                     productos = from p in ListProductos
-                                where p.TipoProducto.Descripcion == tipoProducto.Descripcion
+                                where p.TipoProducto.IdTipoProducto == tipoProducto.IdTipoProducto
                                 select p;
                 }
                 else if (cboCategoria.SelectedIndex != -1 && cboMedida.SelectedIndex == -1)
                 {
                     productos = from p in ListProductos
-                                where p.TipoProducto.Descripcion == tipoProducto.Descripcion && p.Categoria.Descripcion == categoria.Descripcion
+                                where p.TipoProducto.IdTipoProducto == tipoProducto.IdTipoProducto && p.Categoria.IdCategoria == categoria.IdCategoria
                                 select p;
                 }
                 else if (cboCategoria.SelectedIndex == -1 && cboMedida.SelectedIndex != -1)
                 {
                     productos = from p in ListProductos
-                                where p.TipoProducto.Descripcion == tipoProducto.Descripcion && p.Medida.Descripcion == medida.Descripcion
+                                where p.TipoProducto.IdTipoProducto == tipoProducto.IdTipoProducto && p.Medida.IdMedidas == medida.IdMedidas
                                 select p;
                 }
                 else
                 {
                     productos = from p in ListProductos
-                                where p.TipoProducto.Descripcion == tipoProducto.Descripcion && p.Categoria.Descripcion == categoria.Descripcion && p.Medida.Descripcion == medida.Descripcion
+                                where p.TipoProducto.IdTipoProducto == tipoProducto.IdTipoProducto && p.Categoria.IdCategoria == categoria.IdCategoria && p.Medida.IdMedidas == medida.IdMedidas
                                 select p;
                 }
 
@@ -448,6 +452,13 @@ namespace Formularios
                     dgvProductos.DataSource = (from p in ListProductos
                                                select new { TipoProducto = p.TipoProducto.Descripcion, Categoria = p.Categoria.Descripcion, p.Descripcion, Medida = p.Medida.Descripcion, p.Precio, p.Stock })
                                            .ToList();
+
+                    float total = 0;
+                    foreach (var item in ListProductos)
+                    {
+                        total += ((float)item.Precio * item.Stock);
+                    };
+                    txtValoracion.Text = total.ToString();
                 }
                 catch (Exception ex)
                 {
@@ -553,6 +564,13 @@ namespace Formularios
                                                    select new { TipoProducto = p.TipoProducto.Descripcion, Categoria = p.Categoria.Descripcion, p.Descripcion, Medida = p.Medida.Descripcion, p.Precio, p.Stock })
                                            .ToList();
 
+                        float total = 0;
+                        foreach (var item in ListProductos)
+                        {
+                            total += ((float)item.Precio * item.Stock);
+                        };
+                        txtValoracion.Text = total.ToString();
+                    
                     }
                     catch (Exception ex)
                     {
@@ -750,7 +768,6 @@ namespace Formularios
                         t.Start();
 
                         CargarCboCategoria(cboAdministrarCategoria, cboAdministrarTipoProducto);
-                        CargarCboCategoria(cboCategoria, cboTipoProducto);
                     }
                 }
                 catch (Exception ex)
@@ -816,7 +833,6 @@ namespace Formularios
                         t.Start();
 
                         CargarCboMedida(cboAdministrarMedida, cboAdministrarTipoProducto);
-                        CargarCboMedida(cboMedida, cboTipoProducto);
                     }
                 }
                 catch (Exception ex)
