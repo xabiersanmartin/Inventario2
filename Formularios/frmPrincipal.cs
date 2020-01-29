@@ -1010,7 +1010,61 @@ namespace Formularios
 
         private void btnVentas_Click(object sender, EventArgs e)
         {
+            string msg = "";
 
+            foreach (DataGridViewRow fila in dgvProductos.SelectedRows)
+            {
+                foreach (Producto producto in ListProductos)
+                {
+                    if (fila.Cells["TipoProducto"].Value.ToString() == producto.TipoProducto.Descripcion &&
+                        fila.Cells["Categoria"].Value.ToString() == producto.Categoria.Descripcion &&
+                        fila.Cells["Descripcion"].Value.ToString() == producto.Descripcion &&
+                        fila.Cells["Medida"].Value.ToString() == producto.Medida.Descripcion &&
+                        fila.Cells["Precio"].Value.ToString() == producto.Precio.ToString() &&
+                        fila.Cells["Stock"].Value.ToString() == producto.Stock.ToString())
+                    {
+                        try
+                        {
+                            msg = Program.gestor.BorrarProducto(producto);
+                        }
+                        catch (Exception ex)
+                        {
+                            MetroMessageBox.Show(this, ex.Message, "Error", 250);
+                        }
+                    }
+                }
+            }
+
+            if (msg != "")
+            {
+                MetroMessageBox.Show(this, msg, "Error", 250);
+            }
+            else
+            {
+                lblMsgProductoEliminado.Visible = true;
+                Timer t = new Timer();
+                t.Interval = 6000;
+                t.Tick += (s, ev) =>
+                {
+                    lblMsgProductoEliminado.Hide();
+                    t.Stop();
+                };
+                t.Start();
+            }
+
+            try
+            {
+                // Actualizamos la lista de productos.
+                ListProductos = Program.gestor.MostrarProductos(out msg);
+                dgvProductos.DataSource = (from p in ListProductos
+                                           select new { TipoProducto = p.TipoProducto.Descripcion, Categoria = p.Categoria.Descripcion, p.Descripcion, Medida = p.Medida.Descripcion, p.Precio, p.Stock })
+                                   .ToList();
+
+            }
+            catch (Exception ex)
+            {
+                MetroMessageBox.Show(this, ex.Message + "\nNo se ha podido actualizar la lista de productos.", "Error", 250);
+            }
         }
     }
 }
