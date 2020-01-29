@@ -50,6 +50,7 @@ namespace Formularios
                 else
                 {
                     lblEmpresa.Text = empresaActual.Nombre;
+                    picLogoAjustes.SizeMode = PictureBoxSizeMode.StretchImage;
                     picLogoEmpresa.ImageLocation = empresaActual.Logo;
                 }
 
