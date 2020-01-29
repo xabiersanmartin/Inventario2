@@ -353,25 +353,25 @@ namespace Formularios
                 if (cboCategoria.SelectedIndex == -1 && cboMedida.SelectedIndex == -1)
                 {
                     productos = from p in ListProductos
-                                where p.TipoProducto.Descripcion == tipoProducto.Descripcion
+                                where p.TipoProducto.IdTipoProducto == tipoProducto.IdTipoProducto
                                 select p;
                 }
                 else if (cboCategoria.SelectedIndex != -1 && cboMedida.SelectedIndex == -1)
                 {
                     productos = from p in ListProductos
-                                where p.TipoProducto.Descripcion == tipoProducto.Descripcion && p.Categoria.Descripcion == categoria.Descripcion
+                                where p.TipoProducto.IdTipoProducto == tipoProducto.IdTipoProducto && p.Categoria.IdCategoria == categoria.IdCategoria
                                 select p;
                 }
                 else if (cboCategoria.SelectedIndex == -1 && cboMedida.SelectedIndex != -1)
                 {
                     productos = from p in ListProductos
-                                where p.TipoProducto.Descripcion == tipoProducto.Descripcion && p.Medida.Descripcion == medida.Descripcion
+                                where p.TipoProducto.IdTipoProducto == tipoProducto.IdTipoProducto && p.Medida.IdMedidas == medida.IdMedidas
                                 select p;
                 }
                 else
                 {
                     productos = from p in ListProductos
-                                where p.TipoProducto.Descripcion == tipoProducto.Descripcion && p.Categoria.Descripcion == categoria.Descripcion && p.Medida.Descripcion == medida.Descripcion
+                                where p.TipoProducto.IdTipoProducto == tipoProducto.IdTipoProducto && p.Categoria.IdCategoria == categoria.IdCategoria && p.Medida.IdMedidas == medida.IdMedidas
                                 select p;
                 }
 
