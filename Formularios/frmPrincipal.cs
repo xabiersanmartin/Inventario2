@@ -436,8 +436,11 @@ namespace Formularios
                 {
                     Program.gestor.AnadirProducto(txtDescripcion.Text, float.Parse(txtPrecio.Text), int.Parse(txtStock.Text), categoria.IdCategoria, medida.IdMedidas, tipoProducto.IdTipoProducto);
 
-                    // Actualizamos la lista de productos.
+                    // Actualizamos la lista de productos, para que se cargue en el data gridview cuando se añada un producto.
                     ListProductos = Program.gestor.MostrarProductos(out string msg);
+                    dgvProductos.DataSource = (from p in ListProductos
+                                               select new { TipoProducto = p.TipoProducto.Descripcion, Categoria = p.Categoria.Descripcion, p.Descripcion, Medida = p.Medida.Descripcion, p.Precio, p.Stock })
+                                           .ToList();
                 }
                 catch (Exception ex)
                 {
@@ -651,6 +654,7 @@ namespace Formularios
 
                         CargarCboTipoProducto(cboAdministrarTipoProducto);
                         CargarCboTipoProducto(cboTipoProducto);
+
                     }
                 }
                 catch (Exception ex)
