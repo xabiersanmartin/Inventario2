@@ -673,6 +673,43 @@ namespace GestionDatos
             }
         }
 
+        public String VenderProducto(Producto producto)
+        {
+
+
+            using (SQLiteConnection con = new SQLiteConnection(connectionStr))
+            {
+                if (producto.Stock<=0)
+                {
+                    return "No puedes vender este producto porque no queda stock";
+                }
+                try
+                {
+                    con.Open();
+
+                    string sql = "UPDATE PRODUCTOS Set stock = @stock WHERE idProducto = @idProducto";
+                    SQLiteCommand cmd = new SQLiteCommand(sql, con);
+                    cmd.Parameters.AddWithValue("@stock", producto.Stock-1);
+                    cmd.Parameters.AddWithValue("@idProducto", producto.IdProducto);
+
+                    int numFilas = cmd.ExecuteNonQuery();
+
+                    if (numFilas == 0)
+                    {
+                        return "El producto que quieres vender no existe";
+                    }
+
+                }
+                catch (Exception e)
+                {
+                    return e.Message;
+                }
+            }
+            return "";
+        }
+
+
+
         public string BorrarProducto(Producto producto)
         {
             using (SQLiteConnection con = new SQLiteConnection(connectionStr))

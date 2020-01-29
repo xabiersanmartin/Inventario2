@@ -1274,6 +1274,7 @@
             this.btnVentas.TabIndex = 41;
             this.btnVentas.Text = "&Ventas";
             this.btnVentas.UseSelectable = true;
+            this.btnVentas.Click += new System.EventHandler(this.btnVentas_Click);
             // 
             // FrmPrincipal
             // 
