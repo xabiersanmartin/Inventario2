@@ -537,6 +537,10 @@ namespace Formularios
                     {
                         // Actualizamos la lista de productos.
                         ListProductos = Program.gestor.MostrarProductos(out msg);
+                        dgvProductos.DataSource = (from p in ListProductos
+                                                   select new { TipoProducto = p.TipoProducto.Descripcion, Categoria = p.Categoria.Descripcion, p.Descripcion, Medida = p.Medida.Descripcion, p.Precio, p.Stock })
+                                           .ToList();
+
                     }
                     catch (Exception ex)
                     {
