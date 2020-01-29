@@ -585,6 +585,7 @@ namespace Formularios
                 {
                     lblAjustesAceptados.Text = "Cambios realizados con éxito";
                     lblEmpresa.Text = txtNombreEmpresa.Text;
+                    picLogoEmpresa.SizeMode = PictureBoxSizeMode.StretchImage;
                     picLogoEmpresa.ImageLocation = picLogoAjustes.ImageLocation;
                 }
             }
@@ -600,6 +601,7 @@ namespace Formularios
             {
                 try
                 {
+                    picLogoAjustes.SizeMode = PictureBoxSizeMode.StretchImage;
                     picLogoAjustes.ImageLocation = ofdLogo.FileName;
                     lblAjustesAceptados.Text = "";
                 }
