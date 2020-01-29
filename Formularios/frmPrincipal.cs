@@ -23,6 +23,7 @@ namespace Formularios
     public partial class FrmPrincipal : MetroForm
     {
         bool esAdmin = false;
+        private List<Producto> productosParaGenerarPDF = new List<Producto>();
 
         private Empresa empresaActual; 
         ReadOnlyCollection<Producto> ListProductos { get; set; }
@@ -1025,7 +1026,15 @@ namespace Formularios
                     {
                         try
                         {
-                            msg = Program.gestor.BorrarProducto(producto);
+                            msg = Program.gestor.VenderProducto(producto);
+                            if (msg != "") 
+                            {
+                                MetroMessageBox.Show(this, msg, "Error", 250);
+                            }
+                            else
+                            {
+                                productosParaGenerarPDF.Add(producto);
+                            }
                         }
                         catch (Exception ex)
                         {
@@ -1034,24 +1043,6 @@ namespace Formularios
                     }
                 }
             }
-
-            if (msg != "")
-            {
-                MetroMessageBox.Show(this, msg, "Error", 250);
-            }
-            else
-            {
-                lblMsgProductoEliminado.Visible = true;
-                Timer t = new Timer();
-                t.Interval = 6000;
-                t.Tick += (s, ev) =>
-                {
-                    lblMsgProductoEliminado.Hide();
-                    t.Stop();
-                };
-                t.Start();
-            }
-
             try
             {
                 // Actualizamos la lista de productos.
@@ -1065,6 +1056,67 @@ namespace Formularios
             {
                 MetroMessageBox.Show(this, ex.Message + "\nNo se ha podido actualizar la lista de productos.", "Error", 250);
             }
+        }
+
+        private void btnGenerarPdfVentas_Click(object sender, EventArgs e)
+        {
+            if (productosParaGenerarPDF.Count<=0)
+            {
+                MessageBox.Show("No hay datos para realizar un PDF de ventas");
+            }
+            else
+            {    //ESCOJE A RUTA DONDE GUARDAREMOS EL PDF
+                SaveFileDialog save = new SaveFileDialog();
+                save.Filter = "PDF Files (*.pdf)|*.pdf|All Files (*.*)|*.*";
+                if (save.ShowDialog() == DialogResult.OK)
+                {
+                    string filename = save.FileName;
+                    Document doc = new Document(PageSize.A3, 9, 9, 9, 9);
+                    Chunk encab = new Chunk(empresaActual.Nombre, FontFactory.GetFont("COURIER", 18));
+                    try
+                    {
+                        FileStream file = new FileStream(filename, FileMode.OpenOrCreate);
+                        PdfWriter writer = PdfWriter.GetInstance(doc, file);
+                        doc.Open();
+
+                        doc.Add(new Paragraph(encab));
+
+                        GenerarDocumentoVentas(doc);
+
+                        Process.Start(filename);
+                        doc.Close();
+                    }
+
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                }
+            }
+        }
+        //Función que genera el documento Pdf
+        public void GenerarDocumentoVentas(Document document)
+        {
+            //Nombre de empresa y foto
+            iTextSharp.text.Image image = iTextSharp.text.Image.GetInstance(empresaActual.Logo);
+            image.ScalePercent(25f);
+            document.Add(image);
+            document.Add(new Paragraph("Fecha: " +DateTime.Now));
+
+            float total =0;
+            for (int i = 0; i < productosParaGenerarPDF.Count; i++)
+            {
+                total += productosParaGenerarPDF.ElementAt(i).Precio;
+                document.Add(new Paragraph(
+                "Tipo: "+ productosParaGenerarPDF.ElementAt(i).TipoProducto.Descripcion+", "+
+                "Categoría: "+productosParaGenerarPDF.ElementAt(i).Categoria.Descripcion + ", " +
+                "Descripción: "+productosParaGenerarPDF.ElementAt(i).Descripcion + ", " +
+                "Medida: "+productosParaGenerarPDF.ElementAt(i).Medida.Descripcion.ToString() + ", " +
+                "Precio: " + productosParaGenerarPDF.ElementAt(i).Precio.ToString()
+                ));
+                document.Add(new Paragraph());
+            }
+            document.Add(new Paragraph("Precio total: "+total));
         }
     }
 }

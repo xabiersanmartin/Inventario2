@@ -41,7 +41,6 @@
             this.metroLabel2 = new MetroFramework.Controls.MetroLabel();
             this.metroLabel1 = new MetroFramework.Controls.MetroLabel();
             this.lblMsgProductoEliminado = new System.Windows.Forms.Label();
-            this.btnBorrarProductos = new MetroFramework.Controls.MetroButton();
             this.lblMsgErrorAgregarProducto = new System.Windows.Forms.Label();
             this.lblMsgProductoAñadido = new System.Windows.Forms.Label();
             this.btnAnadirProducto = new MetroFramework.Controls.MetroButton();
@@ -116,7 +115,9 @@
             this.btnCerrarSesion = new MetroFramework.Controls.MetroButton();
             this.label3 = new System.Windows.Forms.Label();
             this.btnExportarPDF = new MetroFramework.Controls.MetroButton();
-            this.btnVentas = new MetroFramework.Controls.MetroButton();
+            this.btnVender = new MetroFramework.Controls.MetroButton();
+            this.btnGenerarPdfVentas = new MetroFramework.Controls.MetroButton();
+            this.btnBorrarProductos = new MetroFramework.Controls.MetroButton();
             ((System.ComponentModel.ISupportInitialize)(this.picLogoEmpresa)).BeginInit();
             this.tabControl.SuspendLayout();
             this.tabProductos.SuspendLayout();
@@ -157,11 +158,10 @@
             // 
             // tabProductos
             // 
-            this.tabProductos.Controls.Add(this.txtValoracion);
-            this.tabProductos.Controls.Add(this.metroLabel2);
+            this.tabProductos.Controls.Add(this.btnExportarPDF);
+            this.tabProductos.Controls.Add(this.btnGenerarPdfVentas);
+            this.tabProductos.Controls.Add(this.btnVender);
             this.tabProductos.Controls.Add(this.metroLabel1);
-            this.tabProductos.Controls.Add(this.lblMsgProductoEliminado);
-            this.tabProductos.Controls.Add(this.btnBorrarProductos);
             this.tabProductos.Controls.Add(this.lblMsgErrorAgregarProducto);
             this.tabProductos.Controls.Add(this.lblMsgProductoAñadido);
             this.tabProductos.Controls.Add(this.btnAnadirProducto);
@@ -211,7 +211,7 @@
             this.txtValoracion.CustomButton.UseSelectable = true;
             this.txtValoracion.CustomButton.Visible = false;
             this.txtValoracion.Lines = new string[0];
-            this.txtValoracion.Location = new System.Drawing.Point(599, 427);
+            this.txtValoracion.Location = new System.Drawing.Point(608, 682);
             this.txtValoracion.MaxLength = 32767;
             this.txtValoracion.Name = "txtValoracion";
             this.txtValoracion.PasswordChar = '\0';
@@ -230,7 +230,7 @@
             // metroLabel2
             // 
             this.metroLabel2.AutoSize = true;
-            this.metroLabel2.Location = new System.Drawing.Point(532, 429);
+            this.metroLabel2.Location = new System.Drawing.Point(533, 686);
             this.metroLabel2.Name = "metroLabel2";
             this.metroLabel2.Size = new System.Drawing.Size(69, 19);
             this.metroLabel2.TabIndex = 38;
@@ -252,23 +252,12 @@
             this.lblMsgProductoEliminado.BackColor = System.Drawing.Color.Transparent;
             this.lblMsgProductoEliminado.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
             this.lblMsgProductoEliminado.ForeColor = System.Drawing.Color.Green;
-            this.lblMsgProductoEliminado.Location = new System.Drawing.Point(318, 433);
+            this.lblMsgProductoEliminado.Location = new System.Drawing.Point(292, 690);
             this.lblMsgProductoEliminado.Name = "lblMsgProductoEliminado";
             this.lblMsgProductoEliminado.Size = new System.Drawing.Size(208, 15);
             this.lblMsgProductoEliminado.TabIndex = 35;
             this.lblMsgProductoEliminado.Text = "Productos eliminados correctamente";
             this.lblMsgProductoEliminado.Visible = false;
-            // 
-            // btnBorrarProductos
-            // 
-            this.btnBorrarProductos.Location = new System.Drawing.Point(131, 419);
-            this.btnBorrarProductos.Name = "btnBorrarProductos";
-            this.btnBorrarProductos.Size = new System.Drawing.Size(181, 29);
-            this.btnBorrarProductos.TabIndex = 34;
-            this.btnBorrarProductos.Text = "Borrar productos seleccionados";
-            this.btnBorrarProductos.UseSelectable = true;
-            this.btnBorrarProductos.Visible = false;
-            this.btnBorrarProductos.Click += new System.EventHandler(this.BtnBorrarProductos_Click);
             // 
             // lblMsgErrorAgregarProducto
             // 
@@ -497,7 +486,7 @@
             // 
             // btnExportarExcel
             // 
-            this.btnExportarExcel.Location = new System.Drawing.Point(0, 419);
+            this.btnExportarExcel.Location = new System.Drawing.Point(461, 419);
             this.btnExportarExcel.Name = "btnExportarExcel";
             this.btnExportarExcel.Size = new System.Drawing.Size(106, 29);
             this.btnExportarExcel.TabIndex = 8;
@@ -1258,7 +1247,7 @@
             // 
             // btnExportarPDF
             // 
-            this.btnExportarPDF.Location = new System.Drawing.Point(105, 676);
+            this.btnExportarPDF.Location = new System.Drawing.Point(349, 419);
             this.btnExportarPDF.Name = "btnExportarPDF";
             this.btnExportarPDF.Size = new System.Drawing.Size(106, 29);
             this.btnExportarPDF.TabIndex = 40;
@@ -1266,29 +1255,52 @@
             this.btnExportarPDF.UseSelectable = true;
             this.btnExportarPDF.Click += new System.EventHandler(this.btnExportarPDF_Click_1);
             // 
-            // btnVentas
+            // btnVender
             // 
-            this.btnVentas.Location = new System.Drawing.Point(236, 676);
-            this.btnVentas.Name = "btnVentas";
-            this.btnVentas.Size = new System.Drawing.Size(106, 29);
-            this.btnVentas.TabIndex = 41;
-            this.btnVentas.Text = "&Ventas";
-            this.btnVentas.UseSelectable = true;
-            this.btnVentas.Click += new System.EventHandler(this.btnVentas_Click);
+            this.btnVender.Location = new System.Drawing.Point(3, 419);
+            this.btnVender.Name = "btnVender";
+            this.btnVender.Size = new System.Drawing.Size(181, 29);
+            this.btnVender.TabIndex = 41;
+            this.btnVender.Text = "&Vender productos seleccionados";
+            this.btnVender.UseSelectable = true;
+            this.btnVender.Click += new System.EventHandler(this.btnVentas_Click);
+            // 
+            // btnGenerarPdfVentas
+            // 
+            this.btnGenerarPdfVentas.Location = new System.Drawing.Point(190, 419);
+            this.btnGenerarPdfVentas.Name = "btnGenerarPdfVentas";
+            this.btnGenerarPdfVentas.Size = new System.Drawing.Size(153, 29);
+            this.btnGenerarPdfVentas.TabIndex = 42;
+            this.btnGenerarPdfVentas.Text = "Generar PDF de las ventas";
+            this.btnGenerarPdfVentas.UseSelectable = true;
+            this.btnGenerarPdfVentas.Click += new System.EventHandler(this.btnGenerarPdfVentas_Click);
+            // 
+            // btnBorrarProductos
+            // 
+            this.btnBorrarProductos.Location = new System.Drawing.Point(108, 676);
+            this.btnBorrarProductos.Name = "btnBorrarProductos";
+            this.btnBorrarProductos.Size = new System.Drawing.Size(181, 29);
+            this.btnBorrarProductos.TabIndex = 34;
+            this.btnBorrarProductos.Text = "Borrar productos seleccionados";
+            this.btnBorrarProductos.UseSelectable = true;
+            this.btnBorrarProductos.Visible = false;
+            this.btnBorrarProductos.Click += new System.EventHandler(this.BtnBorrarProductos_Click);
             // 
             // FrmPrincipal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1279, 711);
-            this.Controls.Add(this.btnVentas);
-            this.Controls.Add(this.btnExportarPDF);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.btnCerrarSesion);
             this.Controls.Add(this.lblCerrarSesion);
             this.Controls.Add(this.grbLogin);
             this.Controls.Add(this.picLogoEmpresa);
+            this.Controls.Add(this.lblMsgProductoEliminado);
+            this.Controls.Add(this.txtValoracion);
+            this.Controls.Add(this.btnBorrarProductos);
             this.Controls.Add(this.tabControl);
+            this.Controls.Add(this.metroLabel2);
             this.Controls.Add(this.lblEmpresa);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(2);
@@ -1398,14 +1410,15 @@
         private MetroFramework.Controls.MetroButton btnAnadirProducto;
         private System.Windows.Forms.Label lblMsgProductoAñadido;
         private System.Windows.Forms.Label lblMsgErrorAgregarProducto;
-        private MetroFramework.Controls.MetroButton btnBorrarProductos;
         private System.Windows.Forms.Label lblMsgProductoEliminado;
         private MetroFramework.Controls.MetroLabel metroLabel1;
         private System.Windows.Forms.Label label3;
         private MetroFramework.Controls.MetroTextBox txtValoracion;
         private MetroFramework.Controls.MetroLabel metroLabel2;
         private MetroFramework.Controls.MetroButton btnExportarPDF;
-        private MetroFramework.Controls.MetroButton btnVentas;
+        private MetroFramework.Controls.MetroButton btnVender;
+        private MetroFramework.Controls.MetroButton btnGenerarPdfVentas;
+        private MetroFramework.Controls.MetroButton btnBorrarProductos;
     }
 }
 

@@ -681,7 +681,7 @@ namespace GestionDatos
             {
                 if (producto.Stock<=0)
                 {
-                    return "No puedes vender este producto porque no queda stock";
+                    return "Uno de los productos no se puede vender porque no queda stock, si se ha seleccionado más de uno, se venderán los demás";
                 }
                 try
                 {
