@@ -16,6 +16,7 @@ using iTextSharp.text;
 using iTextSharp.text.pdf;
 using System.Diagnostics;
 using System.IO;
+using System.Globalization;
 
 namespace Formularios
 {
@@ -475,8 +476,16 @@ namespace Formularios
         /// <param name="e"></param>
         private void TxtPrecio_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) || e.KeyChar == 22)
+            CultureInfo cc = System.Threading.Thread.CurrentThread.CurrentCulture;
+
+            if (!char.IsControl(e.KeyChar) || char.IsNumber(e.KeyChar) || e.KeyChar.ToString() == cc.NumberFormat.NumberDecimalSeparator)
             {
+
+                e.Handled = false;
+            }
+            else
+            {
+
                 e.Handled = true;
             }
         }
