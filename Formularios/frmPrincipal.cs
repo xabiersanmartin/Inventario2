@@ -81,7 +81,7 @@ namespace Formularios
                 // Administrar productos
                 CargarCboTipoProducto(cboAdministrarTipoProducto);
             }
-            catch (Exception)
+            catch (Exception exc)
             {
                 MetroMessageBox.Show(this, "La imagen no puede cargarse porque ha sido eliminada.","Error", 250);
                 return;
